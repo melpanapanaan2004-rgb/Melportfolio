@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mel Christian J. Panapanaan — Software Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1220;
+    --bg-elevated:#121B2E;
+    --bg-card:#16213A;
+    --border:#2B3A5C;
+    --border-soft:#1E2A46;
+    --text:#F1F3F7;
+    --text-muted:#AEB7CC;
+    --text-dim:#7C87A0;
+    --accent:#22C2E8;
+    --accent-dim:#00ADD822;
+    --accent-warm:#FFC372;
+    --accent-green:#8CF29C;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:var(--accent); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  :focus-visible{
+    outline:2px solid var(--accent-warm);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  ::selection{ background:var(--accent-dim); color:var(--text); }
+
+  .mono{ font-family:var(--mono); }
+
+  /* ---------- Skip link ---------- */
+  .skip-link{
+    position:absolute;
+    left:-9999px;
+    top:auto;
+    background:var(--accent);
+    color:#04202A;
+    font-family:var(--mono);
+    font-weight:700;
+    padding:12px 18px;
+    border-radius:6px;
+    z-index:1000;
+  }
+  .skip-link:focus{
+    left:16px;
+    top:16px;
+  }
+
+  /* ---------- Tab bar nav ---------- */
+  .tabbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    align-items:stretch;
+    background:var(--bg-elevated);
+    border-bottom:1px solid var(--border);
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .tabbar-brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 18px;
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:13px;
+    color:var(--text);
+    border-right:1px solid var(--border);
+    white-space:nowrap;
+  }
+  .tabbar-brand .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--accent-green);
+    box-shadow:0 0 6px var(--accent-green);
+    flex:none;
+  }
+  .tab{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:14px;
+    color:var(--text-muted);
+    padding:16px 18px;
+    border-right:1px solid var(--border-soft);
+    white-space:nowrap;
+    cursor:pointer;
+    background:transparent;
+    border-top:3px solid transparent;
+    transition:color .15s ease, background .15s ease, border-color .15s ease;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+  }
+  .tab:hover{ color:var(--text); background:rgba(255,255,255,0.03); text-decoration:none; }
+  .tab.active{
+    color:var(--accent);
+    background:var(--bg);
+    border-top:3px solid var(--accent);
+  }
+
+  section{ scroll-margin-top:60px; }
+
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:64px 24px;
+  }
+  @media (max-width:640px){ .wrap{ padding:48px 20px; } }
+
+  .kicker{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.08em;
+    color:var(--accent);
+    text-transform:uppercase;
+    margin:0 0 10px;
+  }
+
+  h2.section-title{
+    font-family:var(--sans);
+    font-size:clamp(26px,3.6vw,34px);
+    font-weight:800;
+    margin:0 0 8px;
+    color:var(--text);
+    letter-spacing:-0.01em;
+  }
+  .section-flavor{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--text-dim);
+    margin:0 0 32px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:82vh;
+    display:flex;
+    align-items:center;
+    padding:56px 24px;
+  }
+  .hero-inner{
+    max-width:760px;
+    margin:0 auto;
+    width:100%;
+  }
+  .terminal{
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 16px;
+    background:var(--bg-card);
+    border-bottom:1px solid var(--border);
+  }
+  .terminal-bar span{
+    width:11px; height:11px; border-radius:50%; display:inline-block;
+    background:#3a4560;
+  }
+  .terminal-bar .title{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    margin-left:8px;
+  }
+  .terminal-body{
+    padding:28px 26px 30px;
+  }
+  .terminal-body .line{
+    font-family:var(--mono);
+    font-size:13.5px;
+    color:var(--text-dim);
+    margin:0 0 4px;
+  }
+  .terminal-body .prompt{ color:var(--accent-green); }
+  .terminal-body .path{ color:var(--accent-warm); }
+  .hero-name{
+    font-family:var(--sans);
+    font-weight:800;
+    font-size:clamp(28px,5vw,40px);
+    color:var(--text);
+    margin:14px 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .hero-role{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:16px;
+    color:var(--accent);
+    margin:0 0 18px;
+  }
+  .hero-desc{
+    color:var(--text-muted);
+    font-size:15.5px;
+    max-width:56ch;
+    margin:0 0 26px;
+  }
+  .hero-cta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .btn{
+    font-family:var(--sans);
+    font-weight:700;
+    font-size:14.5px;
+    padding:12px 20px;
+    border-radius:8px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    border:1px solid transparent;
+    min-height:44px;
+    transition:transform .12s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:hover{ text-decoration:none; transform:translateY(-1px); }
+  .btn-primary{ background:var(--accent); color:#04202A; }
+  .btn-primary:hover{ background:#3fceef; }
+  .btn-ghost{ background:transparent; color:var(--text); border-color:var(--border); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+
+  /* ---------- About ---------- */
+  .about-text{ color:var(--text-muted); font-size:16px; max-width:68ch; }
+  .about-text p{ margin:0 0 16px; }
+  .capabilities{
+    margin-top:36px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:14px;
+  }
+  .cap-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:18px 20px;
+  }
+  .cap-card .cap-title{
+    font-family:var(--sans);
+    font-weight:700;
+    color:var(--text);
+    font-size:14.5px;
+    margin:0 0 8px;
+  }
+  .cap-card p{ margin:0; color:var(--text-muted); font-size:14px; }
+
+  .edu-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:22px 24px;
+    margin-top:32px;
+  }
+  .edu-card .school{ font-weight:700; color:var(--text); margin:0 0 4px; font-size:16px; }
+  .edu-card .deg{ color:var(--text-muted); font-size:14.5px; margin:0 0 8px; }
+  .edu-card .yrs{ font-family:var(--mono); color:var(--accent); font-size:13px; }
+
+  /* ---------- Experience ---------- */
+  .commit{
+    position:relative;
+    padding-left:28px;
+    border-left:2px solid var(--border);
+    margin-bottom:36px;
+  }
+  .commit:last-child{ margin-bottom:0; }
+  .commit::before{
+    content:'';
+    position:absolute;
+    left:-7px; top:4px;
+    width:12px; height:12px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--accent);
+  }
+  .commit-meta{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--text-dim);
+    margin-bottom:6px;
+  }
+  .commit-role{
+    font-size:19px;
+    font-weight:700;
+    color:var(--text);
+    margin:0 0 2px;
+  }
+  .commit-org{ color:var(--accent); font-size:14.5px; margin:0 0 14px; font-weight:600; }
+  .diff{ margin:0; padding:0; list-style:none; }
+  .diff li{
+    font-size:14.5px;
+    padding:4px 0;
+    padding-left:20px;
+    position:relative;
+    color:var(--text-muted);
+  }
+  .diff li::before{ content:'✓'; position:absolute; left:0; color:var(--accent-green); }
+  .commit-body p{ color:var(--text-muted); font-size:14.5px; }
+
+  /* ---------- Projects ---------- */
+  .projects{ display:grid; gap:18px; }
+  .repo-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:24px 26px;
+    transition:border-color .15s ease;
+  }
+  .repo-card:hover{ border-color:var(--accent); }
+  .repo-name{
+    font-family:var(--sans);
+    font-size:18px;
+    font-weight:700;
+    color:var(--text);
+    margin:0;
+  }
+  .repo-sub{ color:var(--accent); font-size:13.5px; margin:6px 0 0; font-weight:600; }
+  .repo-desc{ color:var(--text-muted); font-size:14.5px; margin:14px 0 12px; }
+  .repo-features{ margin:0 0 14px; padding-left:0; list-style:none; }
+  .repo-features li{
+    font-size:14px;
+    color:var(--text-muted);
+    padding:3px 0 3px 20px;
+    position:relative;
+  }
+  .repo-features li::before{ content:'›'; position:absolute; left:2px; color:var(--accent); font-weight:700; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--accent);
+    background:var(--accent-dim);
+    border:1px solid #22c2e83a;
+    padding:4px 10px;
+    border-radius:20px;
+  }
+
+  /* ---------- Skills ---------- */
+  .skill-group{ margin-bottom:26px; }
+  .skill-group:last-child{ margin-bottom:0; }
+  .skill-group-title{
+    font-family:var(--sans);
+    font-weight:700;
+    font-size:14px;
+    color:var(--text);
+    margin:0 0 12px;
+  }
+  .pills{ display:flex; flex-wrap:wrap; gap:9px; }
+  .pill{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:13.5px;
+    color:var(--text-muted);
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    padding:7px 14px;
+    border-radius:20px;
+  }
+  .pill.accent{ color:var(--accent); border-color:#22c2e84a; }
+
+  /* ---------- Certifications ---------- */
+  .lockfile{
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .lock-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    padding:16px 22px;
+    border-bottom:1px solid var(--border-soft);
+    flex-wrap:wrap;
+  }
+  .lock-row:last-child{ border-bottom:none; }
+  .lock-name{ color:var(--text); font-weight:600; font-size:14.5px; }
+  .lock-name::before{ content:'✓ '; color:var(--accent-green); }
+  .lock-issuer{ color:var(--text-dim); font-size:12.5px; display:block; margin-top:2px; margin-left:20px; }
+  .lock-date{ font-family:var(--mono); color:var(--text-muted); white-space:nowrap; font-size:12.5px; }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+    margin-bottom:24px;
+  }
+  .contact-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .contact-card .label{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .contact-card .value{
+    font-weight:700;
+    font-size:15.5px;
+    color:var(--text);
+    overflow-wrap:anywhere;
+    word-break:break-word;
+    line-height:1.4;
+  }
+  .contact-card a.value{ color:var(--accent); }
+  .contact-card a.value:hover{ text-decoration:underline; }
+
+  footer{
+    text-align:center;
+    padding:44px 24px 64px;
+  }
+  footer .tagline{ color:var(--text-muted); margin-bottom:8px; font-size:14px; font-style:italic; }
+  footer .copyright{ font-family:var(--mono); font-size:12px; color:var(--text-dim); }
+
+  /* ---------- Back to top ---------- */
+  .to-top{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#04202A;
+    border:none;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.5);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;
+    z-index:90;
+  }
+  .to-top.visible{ opacity:1; pointer-events:auto; }
+  .to-top:hover{ transform:translateY(-2px); }
+
+  /* ---------- Print ---------- */
+  @media print{
+    .tabbar, .to-top{ display:none; }
+    body{ background:#fff; color:#111; }
+    .terminal, .repo-card, .cap-card, .lockfile, .contact-card, .edu-card{
+      background:#fff; border-color:#ccc;
+    }
+    a{ color:#111; text-decoration:underline; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="tabbar" id="tabbar" aria-label="Section navigation">
+  <div class="tabbar-brand"><span class="dot"></span> Mel Panapanaan</div>
+  <a class="tab active" data-target="about" href="#about">About</a>
+  <a class="tab" data-target="experience" href="#experience">Experience</a>
+  <a class="tab" data-target="projects" href="#projects">Projects</a>
+  <a class="tab" data-target="skills" href="#skills">Skills</a>
+  <a class="tab" data-target="certifications" href="#certifications">Certifications</a>
+  <a class="tab" data-target="contact" href="#contact">Contact</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span></span><span></span><span></span>
+        <span class="title">mel@panapanaan — profile</span>
+      </div>
+      <div class="terminal-body">
+        <p class="line"><span class="prompt">mel@dev</span>:<span class="path">~</span>$ whoami</p>
+        <h1 class="hero-name">Mel Christian J. Panapanaan</h1>
+        <p class="hero-role">Information Technology Graduate — Web &amp; Mobile Application Development</p>
+        <p class="hero-desc">I build full-stack web and mobile applications, and I like making sure they actually work — through API testing, database design, and hands-on QA. Based in San Pablo, Laguna.</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">View my projects</a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section id="about">
+  <div class="wrap">
+    <p class="kicker">About</p>
+    <h2 class="section-title">A bit about me</h2>
+    <div class="about-text">
+      <p>I'm an Information Technology graduate majoring in Web and Mobile Application Development at Laguna State Polytechnic University — San Pablo City Campus (2022–2026). I work across software development, API testing, database management, troubleshooting, and Agile teams.</p>
+      <p>During my internship I worked hands-on with Golang, Android Studio, MySQL, Postman, JMeter, and Jira — building full-stack features and validating them like a QA engineer would. I'm most interested in shipping technology that actually solves a problem, and in getting a little better at the craft with every project.</p>
+      <p>My goal is to build a career in IT applying what I know about development, testing, and databases — contributing to projects that create real solutions for businesses and users, while growing as a professional practitioner.</p>
+    </div>
+
+    <div class="capabilities">
+      <div class="cap-card">
+        <p class="cap-title">Software Development</p>
+        <p>Build functional web, mobile, and backend applications with modern programming technologies.</p>
+      </div>
+      <div class="cap-card">
+        <p class="cap-title">API Development &amp; Testing</p>
+        <p>Develop and test APIs — validating endpoints, responses, and system performance.</p>
+      </div>
+      <div class="cap-card">
+        <p class="cap-title">Database Management</p>
+        <p>Work with relational and NoSQL databases to store, manage, and retrieve application data.</p>
+      </div>
+      <div class="cap-card">
+        <p class="cap-title">Mobile Development</p>
+        <p>Build Android applications and mobile solutions using Java, Android Studio, Flutter, and Dart.</p>
+      </div>
+      <div class="cap-card">
+        <p class="cap-title">Quality Assurance</p>
+        <p>Perform API, performance, and load testing using tools like Postman and JMeter.</p>
+      </div>
+      <div class="cap-card">
+        <p class="cap-title">Data &amp; Technology</p>
+        <p>Apply technical and analytical skills to organize information and support technology-driven solutions.</p>
+      </div>
+    </div>
+
+    <div class="edu-card">
+      <p class="school">Laguna State Polytechnic University — San Pablo City Campus</p>
+      <p class="deg">B.S. Information Technology, Major in Web and Mobile Application Development</p>
+      <p class="yrs">2022 — 2026</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <p class="kicker">Experience</p>
+    <h2 class="section-title">Where I've worked</h2>
+    <p class="section-flavor">git log --author=mel</p>
+
+    <div class="commit">
+      <p class="commit-meta">August 2026 — Present</p>
+      <p class="commit-role">Data Analyst</p>
+      <p class="commit-org">1Life PH</p>
+      <div class="commit-body">
+        <p>Working with data analysis to support business-related activities and decision-making.</p>
+      </div>
+    </div>
+
+    <div class="commit">
+      <p class="commit-meta">February 9 — April 30</p>
+      <p class="commit-role">Software Developer Intern</p>
+      <p class="commit-org">CARD MRI — BAKAWAN Data Analytics Inc.</p>
+      <div class="commit-body">
+        <ul class="diff">
+          <li>Worked with a development team to build a full-stack system</li>
+          <li>Developed backend functionality using Golang</li>
+          <li>Worked on mobile frontend development using Android Studio</li>
+          <li>Executed API test cases using Postman</li>
+          <li>Performed performance and load testing using JMeter</li>
+          <li>Managed and queried databases using MySQL</li>
+          <li>Used Jira for task tracking, bug reporting, and Agile collaboration</li>
+          <li>Applied Linux commands for troubleshooting and technical support</li>
+          <li>Gained experience working with SaaS platforms</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <p class="kicker">Projects</p>
+    <h2 class="section-title">Things I've built</h2>
+
+    <div class="projects">
+      <div class="repo-card">
+        <p class="repo-name">PLSP Registrar DocsTrack</p>
+        <p class="repo-sub">Online Student Document Request &amp; Tracking System</p>
+        <p class="repo-desc">A web-based system that helps students request and track registrar documents online.</p>
+        <ul class="repo-features">
+          <li>Worked with web application development end-to-end</li>
+          <li>Used Go for backend development</li>
+          <li>Built the frontend with Next.js, React, and TypeScript</li>
+          <li>Used PostgreSQL for database management</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span>
+          <span class="tag">Tailwind CSS</span><span class="tag">Go</span><span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="repo-card">
+        <p class="repo-name">DocuStream</p>
+        <p class="repo-sub">Secure Document Storage &amp; Management Web Application</p>
+        <p class="repo-desc">A web application designed for secure document storage and management.</p>
+        <ul class="repo-features">
+          <li>Document management</li>
+          <li>Digital file organization</li>
+          <li>Secure document storage</li>
+          <li>Database-driven document handling</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">PHP</span><span class="tag">Tailwind CSS</span><span class="tag">MongoDB</span>
+        </div>
+      </div>
+
+      <div class="repo-card">
+        <p class="repo-name">Hospital Management System</p>
+        <p class="repo-sub">School Project</p>
+        <p class="repo-desc">A management system designed to support hospital operations — experience developing systems that manage structured information and real-world business processes.</p>
+        <ul class="repo-features">
+          <li>Patient records</li>
+          <li>Scheduling</li>
+          <li>Workflow management</li>
+          <li>Information organization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <p class="kicker">Skills</p>
+    <h2 class="section-title">What I work with</h2>
+
+    <div class="skill-group">
+      <p class="skill-group-title">Languages</p>
+      <div class="pills">
+        <span class="pill accent">Golang</span><span class="pill accent">Python</span><span class="pill accent">Java</span>
+        <span class="pill accent">C#</span><span class="pill accent">PHP</span><span class="pill accent">JavaScript</span>
+        <span class="pill accent">Dart</span><span class="pill accent">HTML</span><span class="pill accent">CSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Frontend</p>
+      <div class="pills">
+        <span class="pill">React</span><span class="pill">Next.js</span><span class="pill">Tailwind CSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Mobile</p>
+      <div class="pills">
+        <span class="pill">Android Studio</span><span class="pill">Java Android Development</span><span class="pill">Flutter</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Databases</p>
+      <div class="pills">
+        <span class="pill">MySQL</span><span class="pill">PostgreSQL</span><span class="pill">MongoDB</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Testing &amp; Tools</p>
+      <div class="pills">
+        <span class="pill">REST API Development</span><span class="pill">Postman</span><span class="pill">JMeter</span>
+        <span class="pill">Jira</span><span class="pill">Trello</span><span class="pill">Git/GitHub</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Productivity</p>
+      <div class="pills">
+        <span class="pill">Excel</span><span class="pill">Word</span><span class="pill">PowerPoint</span><span class="pill">Office 365</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Platform</p>
+      <div class="pills">
+        <span class="pill">Linux</span><span class="pill">SaaS Platforms</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Working style</p>
+      <div class="pills">
+        <span class="pill">Project Management</span><span class="pill">Team Collaboration</span>
+        <span class="pill">Attention to Detail</span><span class="pill">Critical Thinking</span>
+        <span class="pill">Problem Solving</span><span class="pill">Quality Assurance Mindset</span>
+        <span class="pill">Adaptability</span><span class="pill">Communication</span>
+        <span class="pill">Teamwork</span><span class="pill">Agile Collaboration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap">
+    <p class="kicker">Certifications</p>
+    <h2 class="section-title">Certifications</h2>
+
+    <div class="lockfile">
+      <div class="lock-row">
+        <span><span class="lock-name">Information Technology Specialist – Java</span><span class="lock-issuer">Certiport</span></span>
+        <span class="lock-date">2026 – 2030</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">NC II – Computer Systems Servicing</span><span class="lock-issuer">TESDA</span></span>
+        <span class="lock-date">Jan 23, 2025 – Jan 22, 2030</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">Cloud Computing Essentials</span></span>
+        <span class="lock-date">March 31, 2026</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">IT Customer Support Basics</span></span>
+        <span class="lock-date">April 9, 2026</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">Data Analytics Essentials</span></span>
+        <span class="lock-date">April 15, 2026</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">Agile Explorer</span></span>
+        <span class="lock-date">April 30, 2025</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">Junior Cybersecurity Analyst Career Path</span></span>
+        <span class="lock-date">December 18, 2025</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">Cyber Threat Management</span></span>
+        <span class="lock-date">December 19, 2025</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">Web Development Fundamentals</span></span>
+        <span class="lock-date">September 25, 2024</span>
+      </div>
+      <div class="lock-row">
+        <span><span class="lock-name">Artificial Intelligence Fundamentals</span></span>
+        <span class="lock-date">October 4, 2024</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <p class="kicker">Contact</p>
+    <h2 class="section-title">Let's talk</h2>
+    <p class="section-flavor">Happy to answer questions about my work or discuss opportunities.</p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <span class="label">Email</span>
+        <a class="value" href="mailto:melpanapanaan2004@gmail.com">melpanapanaan2004@gmail.com</a>
+      </div>
+      <div class="contact-card">
+        <span class="label">Phone</span>
+        <a class="value" href="tel:09078993759">0907 899 3759</a>
+      </div>
+      <div class="contact-card">
+        <span class="label">Location</span>
+        <span class="value">San Pablo, Laguna, Philippines</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="mailto:melpanapanaan2004@gmail.com" class="btn btn-primary">Email me</a>
+      <a href="tel:09078993759" class="btn btn-ghost">Call me</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="tagline">"Let's build something great. Innovate. Automate. Elevate."</p>
+  <p class="copyright">© 2026 Mel Christian J. Panapanaan</p>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+  // Active tab highlighting on scroll
+  (function(){
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const sections = tabs.map(t => document.getElementById(t.dataset.target)).filter(Boolean);
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const id = entry.target.id;
+          tabs.forEach(t => t.classList.toggle('active', t.dataset.target === id));
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(s => obs.observe(s));
+  })();
+
+  // Back to top button
+  (function(){
+    const btn = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      btn.classList.toggle('visible', window.scrollY > 500);
+    });
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+</script>
+
+</body>
+</html>
